@@ -1,0 +1,33 @@
+/* Añade esto al final de tu App.css */
+
+.campo-formulario textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.campo-formulario select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+}
+
+.aula-centro {
+  font-size: 0.8rem;
+  color: #2196F3;
+  margin-top: 4px;
+  display: block;
+}
+
+.aula-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
