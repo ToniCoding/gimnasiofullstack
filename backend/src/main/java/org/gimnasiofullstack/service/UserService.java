@@ -28,15 +28,16 @@ public class UserService {
             return createRegisterResponse("El nombre de usuario ya está en uso");
         }
 
-        User user = new User();
-        user.setNombre(request.getNombre());
-        user.setApellidos(request.getApellidos());
-        user.setEmail(request.getEmail());
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setFechaNacimiento(request.getFechaNacimiento());
-        user.setGenero(request.getGenero());
-        user.setRol("ROLE_USER");
+        User user = User.builder()
+                .nombre(request.getNombre())
+                .apellidos(request.getApellidos())
+                .email(request.getEmail())
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .fechaNacimiento(request.getFechaNacimiento())
+                .genero(request.getGenero())
+                .rol("ROLE_USER")
+                .build();
 
         userRepository.save(user);
 

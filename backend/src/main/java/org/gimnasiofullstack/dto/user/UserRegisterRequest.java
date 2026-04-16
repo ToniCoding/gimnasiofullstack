@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserRegisterRequest {
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
@@ -33,5 +35,6 @@ public class UserRegisterRequest {
     @Past(message = "La fecha de nacimiento debe estar en el pasado")
     private LocalDate fechaNacimiento;
 
-    private String genero;
+    @Builder.Default
+    private String genero = "No especificado";
 }
