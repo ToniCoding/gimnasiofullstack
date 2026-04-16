@@ -1,2 +1,0 @@
-Task center,Software information,About ToniCoding,Socials,Exit
-Centro de tareas,Informacion del software,Sobre ToniCoding,Redes sociales,Salir
