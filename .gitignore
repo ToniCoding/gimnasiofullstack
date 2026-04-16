@@ -1,0 +1,56 @@
+### IntelliJ IDEA ###
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+.kotlin
+.idea/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### GimnasioFullstack ###
+application.properties
+
+### Frontend / React ###
+frontend/node_modules/
+frontend/.env
+frontend/build/
+frontend/dist/
+frontend/.next/
+frontend/out/
+
+### CSS / Tailwind / Material UI generated ###
+*.css.map
+*.min.css
+
+### Logs ###
+*.log
+logs/
+
+### OS generated files ###
+Thumbs.db
+ehthumbs.db
+*.swp
+*.swo
