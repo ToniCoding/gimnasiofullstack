@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.gimnasiofullstack.dto.exercise.ExerciseResponse;
-
 import java.time.Instant;
 import java.util.List;
 
@@ -15,5 +14,6 @@ public class TrainingSessionResponse {
     private Long id;
     private Integer duracionSegundos;
     private Instant timestampCreacion;
+    private Long userId;
     private List<ExerciseResponse> ejercicios;
 }

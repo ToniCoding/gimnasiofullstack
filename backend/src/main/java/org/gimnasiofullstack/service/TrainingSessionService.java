@@ -1,7 +1,9 @@
 package org.gimnasiofullstack.service;
 
 import org.gimnasiofullstack.dto.exercise.ExerciseEntry;
+import org.gimnasiofullstack.dto.exercise.ExerciseResponse;
 import org.gimnasiofullstack.dto.serie.SerieEntry;
+import org.gimnasiofullstack.dto.serie.SerieResponse;
 import org.gimnasiofullstack.dto.session.TrainingSessionRequest;
 import org.gimnasiofullstack.dto.session.TrainingSessionResponse;
 import org.gimnasiofullstack.dto.session.TrainingSessionSummaryResponse;
@@ -36,11 +38,11 @@ public class TrainingSessionService {
 
         TrainingSession savedSession = trainingSessionRepository.save(session);
 
-        List<TrainingSessionExercise> ejerciciosRegistrados = new ArrayList<>();
         int ejercicioOrden = 0;
 
         for (ExerciseEntry exerciseEntry : request.getEjercicios()) {
             ejercicioOrden++;
+
             Exercise exercise = exerciseRepository.findByNombre(exerciseEntry.getNombreEjercicio())
                     .orElseGet(() -> {
                         Exercise newExercise = new Exercise();
@@ -66,8 +68,6 @@ public class TrainingSessionService {
                 serie.setTrainingSessionExercise(savedSessionExercise);
                 serieRepository.save(serie);
             }
-
-            ejerciciosRegistrados.add(savedSessionExercise);
         }
 
         return mapToResponse(savedSession);
@@ -114,32 +114,37 @@ public class TrainingSessionService {
         response.setId(session.getId());
         response.setDuracionSegundos(session.getDuracionSegundos());
         response.setTimestampCreacion(session.getTimestampCreacion());
+        response.setUserId(session.getUsuario().getId());
 
         List<TrainingSessionExercise> ejercicios = trainingSessionExerciseRepository
                 .findByTrainingSessionOrderByOrdenAsc(session);
 
-        response.setEjercicios(ejercicios.stream().map(te -> {
-            org.gimnasiofullstack.dto.exercise.ExerciseResponse exerciseResponse =
-                    new org.gimnasiofullstack.dto.exercise.ExerciseResponse();
+        List<ExerciseResponse> exerciseResponses = new ArrayList<>();
+
+        for (TrainingSessionExercise te : ejercicios) {
+            ExerciseResponse exerciseResponse = new ExerciseResponse();
             exerciseResponse.setId(te.getExercise().getId());
             exerciseResponse.setNombre(te.getExercise().getNombre());
             exerciseResponse.setDescripcion(te.getExercise().getDescripcion());
             exerciseResponse.setOrden(te.getOrden());
 
             List<Serie> series = serieRepository.findByTrainingSessionExerciseOrderByOrdenAsc(te);
-            exerciseResponse.setSeries(series.stream().map(s -> {
-                org.gimnasiofullstack.dto.serie.SerieResponse serieResponse =
-                        new org.gimnasiofullstack.dto.serie.SerieResponse();
+            List<SerieResponse> serieResponses = new ArrayList<>();
+
+            for (Serie s : series) {
+                SerieResponse serieResponse = new SerieResponse();
                 serieResponse.setId(s.getId());
                 serieResponse.setKg(s.getKg());
                 serieResponse.setRepeticiones(s.getRepeticiones());
                 serieResponse.setOrden(s.getOrden());
-                return serieResponse;
-            }).collect(Collectors.toList()));
+                serieResponses.add(serieResponse);
+            }
 
-            return exerciseResponse;
-        }).collect(Collectors.toList()));
+            exerciseResponse.setSeries(serieResponses);
+            exerciseResponses.add(exerciseResponse);
+        }
 
+        response.setEjercicios(exerciseResponses);
         return response;
     }
 }
